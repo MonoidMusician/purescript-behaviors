@@ -1,5 +1,6 @@
 module FRP.Behavior.Keyboard
   ( keys
+  , modifiers
   , key
   ) where
 
