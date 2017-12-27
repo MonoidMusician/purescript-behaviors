@@ -2,19 +2,19 @@
 
 var currentKeys = [];
 addEventListener("keydown", function(e) {
-  var index = currentKeys.indexOf(e.keyCode);
+  var index = currentKeys.indexOf(e.key);
   if (index < 0) {
-    currentKeys.push(e.keyCode);
+    currentKeys.push(e.key);
   }
 });
 addEventListener("keyup", function(e) {
-  var index = currentKeys.indexOf(e.keyCode);
+  var index = currentKeys.indexOf(e.key);
   if (index >= 0) {
     currentKeys.splice(index, 1);
   }
 });
 
-exports.withKeys = function (e) {
+exports.withKeysImpl = function (e) {
   return function(sub) {
     return e(function(a) {
       sub({ keys: currentKeys, value: a });
@@ -22,9 +22,9 @@ exports.withKeys = function (e) {
   };
 };
 
-exports.down = function(sub) {
+exports.downImpl = function(sub) {
   var cb = function(e) {
-    sub(e.keyCode);
+    sub(e.key);
   };
   addEventListener("keydown", cb);
   return function() {
@@ -32,9 +32,9 @@ exports.down = function(sub) {
   }
 };
 
-exports.up = function(sub) {
+exports.upImpl = function(sub) {
   var cb = function(e) {
-    sub(e.keyCode);
+    sub(e.key);
   };
   addEventListener("keyup", cb);
   return function() {
